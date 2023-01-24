@@ -172,6 +172,7 @@ class TimeGridHeader extends React.Component {
               rtl={rtl}
               getNow={getNow}
               minRows={2}
+              maxRows={3}
               range={range}
               events={groupedEvents.get(id) || []}
               resourceId={resource && id}
@@ -183,6 +184,9 @@ class TimeGridHeader extends React.Component {
               getters={getters}
               localizer={localizer}
               onSelect={this.props.onSelectEvent}
+              onShowMore={(...props) => {
+                console.log('onShowMore:', props);
+              }}
               onDoubleClick={this.props.onDoubleClickEvent}
               onKeyPress={this.props.onKeyPressEvent}
               onSelectSlot={this.props.onSelectSlot}
