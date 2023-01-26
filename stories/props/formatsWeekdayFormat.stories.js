@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import moment from 'moment'
-import { Calendar, momentLocalizer } from '../../src'
+import {Calendar, momentLocalizer, Views} from '../../src'
 import demoEvents from '../resources/events'
 import mdx from './formatsWeekdayFormat.mdx'
 
@@ -19,7 +19,7 @@ export default {
 export function FormatsWeekdayFormat() {
   const { defaultDate, formats } = useMemo(
     () => ({
-      defaultDate: new Date(2015, 3, 1),
+      defaultDate: new Date(2015, 3, 12),
       formats: {
         weekdayFormat: (date, culture, localizer) =>
           localizer.format(date, 'dddd', culture),
@@ -31,6 +31,7 @@ export function FormatsWeekdayFormat() {
   return (
     <div className="height600">
       <Calendar
+        defaultView={Views.WEEK}
         defaultDate={defaultDate}
         events={demoEvents}
         formats={formats}
