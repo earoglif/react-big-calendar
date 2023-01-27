@@ -31,6 +31,7 @@ class Week extends React.Component {
         max={max}
         scrollToTime={scrollToTime}
         enableAutoScroll={enableAutoScroll}
+        maxRows={3}
       />
     )
   }
@@ -42,7 +43,7 @@ Week.propTypes = {
   min: PropTypes.instanceOf(Date),
   max: PropTypes.instanceOf(Date),
   scrollToTime: PropTypes.instanceOf(Date),
-  enableAutoScroll: PropTypes.bool,
+  enableAutoScroll: PropTypes.bool
 }
 
 Week.defaultProps = TimeGrid.defaultProps

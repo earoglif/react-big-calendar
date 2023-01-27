@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import scrollbarSize from 'dom-helpers/scrollbarSize'
-import React from 'react'
+import React, {createRef} from 'react'
 
 import DateContentRow from './DateContentRow'
 import Header from './Header'
 import ResourceHeader from './ResourceHeader'
 import { notify } from './utils/helpers'
+import PopOverlay from "./PopOverlay";
+import getPosition from "dom-helpers/position";
 
 class TimeGridHeader extends React.Component {
   handleHeaderClick = (date, view, e) => {
@@ -105,6 +107,61 @@ class TimeGridHeader extends React.Component {
     )
   }
 
+  renderOverlay() {
+    let overlay = this.state?.overlay ?? {}
+    let {
+      accessors,
+      localizer,
+      components,
+      getters,
+      selected,
+      popupOffset,
+      handleDragStart,
+      scrollRef
+    } = this.props
+
+    const onHide = () => this.setState({ overlay: null })
+
+    return (
+      <PopOverlay
+        overlay={overlay}
+        accessors={accessors}
+        localizer={localizer}
+        components={components}
+        getters={getters}
+        selected={selected}
+        popupOffset={0}
+        ref={scrollRef}
+        handleKeyPressEvent={this.handleKeyPressEvent}
+        handleSelectEvent={this.handleSelectEvent}
+        handleDoubleClickEvent={this.handleDoubleClickEvent}
+        handleDragStart={handleDragStart}
+        show={!!overlay.position}
+        overlayDisplay={this.overlayDisplay}
+        onHide={onHide}
+        isHeader={true}
+      />
+    )
+  }
+
+  overlayDisplay = () => {
+    this.setState({
+      overlay: null,
+    })
+  }
+
+  handleShowMore(events, date, cell, slot, target) {
+    let position = getPosition(cell, null)
+
+    this.setState({
+      overlay: {
+        events,
+        position,
+        target: cell
+      },
+    })
+  }
+
   render() {
     let {
       width,
@@ -120,6 +177,7 @@ class TimeGridHeader extends React.Component {
       scrollRef,
       localizer,
       isOverflowing,
+      maxRows = Infinity,
       components: {
         timeGutterHeader: TimeGutterHeader,
         resourceHeader: ResourceHeaderComponent = ResourceHeader,
@@ -172,7 +230,7 @@ class TimeGridHeader extends React.Component {
               rtl={rtl}
               getNow={getNow}
               minRows={2}
-              maxRows={3}
+              maxRows={maxRows}
               range={range}
               events={groupedEvents.get(id) || []}
               resourceId={resource && id}
@@ -184,9 +242,7 @@ class TimeGridHeader extends React.Component {
               getters={getters}
               localizer={localizer}
               onSelect={this.props.onSelectEvent}
-              onShowMore={(...props) => {
-                console.log('onShowMore:', props);
-              }}
+              onShowMore={this.handleShowMore.bind(this)}
               onDoubleClick={this.props.onDoubleClickEvent}
               onKeyPress={this.props.onKeyPressEvent}
               onSelectSlot={this.props.onSelectSlot}
@@ -195,6 +251,8 @@ class TimeGridHeader extends React.Component {
             />
           </div>
         ))}
+
+        {resources ? this.renderOverlay() : null}
       </div>
     )
   }
@@ -227,6 +285,7 @@ TimeGridHeader.propTypes = {
   onDrillDown: PropTypes.func,
   getDrilldownView: PropTypes.func.isRequired,
   scrollRef: PropTypes.any,
+  maxRows: PropTypes.number
 }
 
 export default TimeGridHeader

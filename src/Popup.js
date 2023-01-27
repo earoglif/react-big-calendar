@@ -9,7 +9,7 @@ import { isSelected } from './utils/selection'
 /**
  * Changes to react-overlays cause issue with auto positioning,
  * so we need to manually calculate the position of the popper,
- * and constrain it to the Month container.
+ * and constrain it to the container.
  */
 function getPosition({ target, offset, container, box }) {
   const { top, left, width, height } = getOffset(target)
@@ -34,6 +34,11 @@ function getPosition({ target, offset, container, box }) {
   }
 }
 
+function getHeaderPosition(target) {
+  const { top, left, width, height } = getOffset(target)
+  return {topOffset: top, leftOffset: left}
+}
+
 function Pop({
   containerRef,
   accessors,
@@ -53,29 +58,37 @@ function Pop({
   popperRef,
   target,
   offset,
+  isHeader
 }) {
   useClickOutside({ ref: popperRef, callback: show })
   useLayoutEffect(() => {
-    const { topOffset, leftOffset } = getPosition({
-      target,
-      offset,
-      container: containerRef.current,
-      box: popperRef.current,
-    })
+    const { topOffset, leftOffset } = isHeader ?
+      getHeaderPosition(target) :
+      getPosition({
+        target,
+        offset,
+        container: containerRef.current,
+        box: popperRef.current,
+      })
     popperRef.current.style.top = `${topOffset}px`
     popperRef.current.style.left = `${leftOffset}px`
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offset.x, offset.y, target])
 
   const { width } = position
-  const style = {
+  const style = isHeader ? {
+    width: width,
+    boxSizing: 'border-box',
+    padding: 0
+  } : {
     minWidth: width + width / 2,
   }
   return (
     <div style={style} className="rbc-overlay" ref={popperRef}>
-      <div className="rbc-overlay-header">
+
+      {slotStart ? <div className="rbc-overlay-header">
         {localizer.format(slotStart, 'dayHeaderFormat')}
-      </div>
+      </div> : null}
       {events.map((event, idx) => (
         <EventCell
           key={idx}
@@ -98,6 +111,13 @@ function Pop({
           onDragEnd={() => show()}
         />
       ))}
+      {
+        components.showMoreProps?.closeButtonText ?
+        <button onClick={() => {show()}} className='rbc-button-link rbc-show-more'>
+          {components.showMoreProps.closeButtonText}
+        </button>
+        : null
+      }
     </div>
   )
 }
@@ -114,7 +134,7 @@ Popup.propTypes = {
   position: PropTypes.object.isRequired,
   show: PropTypes.func.isRequired,
   events: PropTypes.array.isRequired,
-  slotStart: PropTypes.instanceOf(Date).isRequired,
+  slotStart: PropTypes.instanceOf(Date),
   slotEnd: PropTypes.instanceOf(Date),
   onSelect: PropTypes.func,
   onDoubleClick: PropTypes.func,
@@ -122,5 +142,6 @@ Popup.propTypes = {
   handleDragStart: PropTypes.func,
   style: PropTypes.object,
   offset: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+  isHeader: PropTypes.bool
 }
 export default Popup

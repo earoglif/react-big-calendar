@@ -18,6 +18,7 @@ function CalOverlay({
   handleDragStart,
   onHide,
   overlayDisplay,
+  isHeader = false
 }) {
   const popperRef = useRef(null)
   if (!overlay.position) return null
@@ -58,6 +59,7 @@ function CalOverlay({
           onDoubleClick={handleDoubleClickEvent}
           onKeyPress={handleKeyPressEvent}
           handleDragStart={handleDragStart}
+          isHeader={isHeader}
         />
       )}
     </Overlay>
@@ -90,6 +92,7 @@ PopOverlay.propTypes = {
   handleDragStart: PropTypes.func,
   onHide: PropTypes.func,
   overlayDisplay: PropTypes.func,
+  isHeader: PropTypes.bool,
 }
 
 export default PopOverlay

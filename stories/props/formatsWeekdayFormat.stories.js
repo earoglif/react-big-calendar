@@ -36,6 +36,14 @@ export function FormatsWeekdayFormat() {
         events={demoEvents}
         formats={formats}
         localizer={mLocalizer}
+        components={{
+          week: {
+            showMoreProps: {
+              closeButtonText: 'Close!'
+            }
+          }
+        }}
+        popup
       />
     </div>
   )

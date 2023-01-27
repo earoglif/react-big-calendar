@@ -226,6 +226,7 @@ export default class TimeGrid extends Component {
           onDrillDown={this.props.onDrillDown}
           getDrilldownView={this.props.getDrilldownView}
           resizable={resizable}
+          maxRows={this.props.maxRows}
         />
         <div
           ref={this.contentRef}
@@ -356,6 +357,7 @@ TimeGrid.propTypes = {
   getDrilldownView: PropTypes.func.isRequired,
 
   dayLayoutAlgorithm: DayLayoutAlgorithmPropType,
+  maxRows: PropTypes.number,
 }
 
 TimeGrid.defaultProps = {
