@@ -177,4 +177,10 @@ export default [
     start: new Date(2015, 3, 13, 0, 30, 0),
     end: new Date(2015, 3, 14, 0, 0, 0),
   },
+  {
+    id: 23,
+    title: '1 hour through 2 days',
+    start: new Date(2015, 3, 15, 23, 30, 0),
+    end: new Date(2015, 3, 16, 0, 30, 0),
+  },
 ]

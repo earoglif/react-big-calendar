@@ -21,6 +21,8 @@ class Week extends React.Component {
     } = this.props
     let range = Week.range(date, this.props)
 
+    console.log('Week:', range)
+
     return (
       <TimeGrid
         {...props}
