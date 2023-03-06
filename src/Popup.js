@@ -84,7 +84,7 @@ function Pop({
     minWidth: width + width / 2,
   }
   return (
-    <div style={style} className="rbc-overlay" ref={popperRef}>
+    <div style={style} className={`rbc-overlay ${components.showMoreProps?.popupStyleClass || ''}`} ref={popperRef}>
 
       {slotStart ? <div className="rbc-overlay-header">
         {localizer.format(slotStart, 'dayHeaderFormat')}

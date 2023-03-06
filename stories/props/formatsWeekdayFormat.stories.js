@@ -39,7 +39,8 @@ export function FormatsWeekdayFormat() {
         components={{
           week: {
             showMoreProps: {
-              closeButtonText: 'Close!'
+              closeButtonText: 'Close!',
+              popupStyleClass: 'show-more'
             }
           }
         }}
