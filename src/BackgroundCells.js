@@ -55,24 +55,23 @@ class BackgroundCells extends React.Component {
           console.log('MAP:', date, index, className, style)
 
           return (
-            <Wrapper key={index} value={date} range={range}>
-              <div
-                style={style}
-                ref={item => {
-                  console.log('MAP REF:', item)
-                  this.dayItems[index] = item
-                }}
-                className={clsx(
-                  'rbc-day-bg',
-                  className,
-                  selected && 'rbc-selected-cell',
-                  localizer.isSameDate(date, current) && 'rbc-today',
-                  currentDate &&
-                    localizer.neq(currentDate, date, 'month') &&
-                    'rbc-off-range-bg'
-                )}
-              />
-            </Wrapper>
+            <div
+              key={index}
+              style={style}
+              ref={item => {
+                console.log('MAP REF:', item)
+                this.dayItems[index] = item
+              }}
+              className={clsx(
+                'rbc-day-bg',
+                className,
+                selected && 'rbc-selected-cell',
+                localizer.isSameDate(date, current) && 'rbc-today',
+                currentDate &&
+                  localizer.neq(currentDate, date, 'month') &&
+                  'rbc-off-range-bg'
+              )}
+            />
           )
         })}
       </div>
