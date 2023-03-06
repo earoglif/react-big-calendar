@@ -33,11 +33,14 @@ class DateContentRow extends React.Component {
     let metrics = this.slotMetrics(this.props)
     let row = qsa(this.containerRef.current, '.rbc-row-bg')[0]
 
+    console.log('handleShowMore:', row)
+
     let cell
     if (row) cell = row.children[slot - 1]
 
     let events = metrics.getEventsForSlot(slot)
     onShowMore(events, range[slot - 1], cell, slot, target)
+
   }
 
   getContainer = () => {

@@ -43,7 +43,7 @@ class BackgroundCells extends React.Component {
     let { selecting, startIdx, endIdx } = this.state
     let current = getNow()
 
-    console.log('BackgroundCells:', range)
+    console.log('BackgroundCells:', range, this.containerRef.current)
 
     return (
       <div className="rbc-row-bg" ref={this.containerRef}>
