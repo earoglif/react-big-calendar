@@ -44,24 +44,16 @@ class BackgroundCells extends React.Component {
     let { selecting, startIdx, endIdx } = this.state
     let current = getNow()
 
-    console.log('BackgroundCells:', range, this.containerRef.current, this.dayItems)
-
     return (
       <div className="rbc-row-bg" ref={this.containerRef}>
         {range.map((date, index) => {
           let selected = selecting && index >= startIdx && index <= endIdx
           const { className, style } = getters.dayProp(date)
 
-          console.log('MAP:', date, index, className, style)
-
           return (
             <div
               key={index}
               style={style}
-              ref={item => {
-                console.log('MAP REF:', item)
-                this.dayItems[index] = item
-              }}
               className={clsx(
                 'rbc-day-bg',
                 className,
