@@ -58,7 +58,10 @@ class BackgroundCells extends React.Component {
             <Wrapper key={index} value={date} range={range}>
               <div
                 style={style}
-                ref={item => this.dayItems[index] = item}
+                ref={item => {
+                  console.log('MAP REF:', item)
+                  this.dayItems[index] = item
+                }}
                 className={clsx(
                   'rbc-day-bg',
                   className,
