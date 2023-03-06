@@ -14,6 +14,7 @@ class BackgroundCells extends React.Component {
       selecting: false,
     }
     this.containerRef = createRef()
+    this.dayItems = []
   }
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class BackgroundCells extends React.Component {
     let { selecting, startIdx, endIdx } = this.state
     let current = getNow()
 
-    console.log('BackgroundCells:', range, this.containerRef.current)
+    console.log('BackgroundCells:', range, this.containerRef.current, this.dayItems)
 
     return (
       <div className="rbc-row-bg" ref={this.containerRef}>
@@ -57,6 +58,7 @@ class BackgroundCells extends React.Component {
             <Wrapper key={index} value={date} range={range}>
               <div
                 style={style}
+                ref={item => this.dayItems[index] = item}
                 className={clsx(
                   'rbc-day-bg',
                   className,
