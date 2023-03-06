@@ -779,9 +779,9 @@ class Calendar extends React.Component {
         event: PropTypes.elementType,
       }),
       week: PropTypes.shape({
-        showMoreProps: {
+        showMoreProps: PropTypes.shape({
           closeButtonText: PropTypes.string
-        },
+        }),
         header: PropTypes.elementType,
         event: PropTypes.elementType,
       }),

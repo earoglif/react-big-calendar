@@ -1,6 +1,6 @@
 {
   "name": "psn-react-big-calendar",
-  "version": "1.6.6",
+  "version": "1.6.10",
   "description": "Calendar! with events",
   "author": {
     "name": "Jason Quense",
@@ -39,7 +39,7 @@
     "storybook": "start-storybook -p 9002",
     "test": "yarn lint && NODE_ENV=test jest",
     "tdd": "NODE_ENV=test jest --watch",
-    "pub": "npm version patch --no-git-tag-version && npm publish"
+    "pub": "npm publish"
   },
   "peerDependencies": {
     "react": "^16.14.0 || ^17 || ^18",
